@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/YexipuGameWebsite/_next/static/chunks/0dbhjjzl8qfwv.js"],"ViewportBoundary"]
+3:I[97367,["/YexipuGameWebsite/_next/static/chunks/0dbhjjzl8qfwv.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/YexipuGameWebsite/_next/static/chunks/0dbhjjzl8qfwv.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"叶戏谱｜东方叶牌叙事策略游戏"}],["$","meta","1",{"name":"description","content":"《叶戏谱》是一款以中国传统叶子戏与谱牒文化为灵感的东方叙事策略游戏。查看世界观、玩法特色、角色档案与最新开发日志。"}],["$","meta","2",{"name":"codex-preview","content":"development"}],["$","link","3",{"rel":"shortcut icon","href":"/YexipuGameWebsite/favicon.svg"}],["$","link","4",{"rel":"icon","href":"/YexipuGameWebsite/favicon.svg"}],["$","$L5","5",{}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"bSHF4bxolKQnoexdW4Owf"}
