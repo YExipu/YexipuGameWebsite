@@ -6,6 +6,8 @@ const requiredFiles = [
   "assets/stable-card-overrides.css",
   "assets/card-flip.js",
   "images/cards/card-back.png",
+  "images/cards/player-male-shiyeren.png",
+  "images/cards/player-female-shiyeren.png",
   "images/cards/sun-wukong.png",
   "images/cards/zhu-bajie.png",
   "images/cards/sha-wujing.png",
@@ -14,6 +16,8 @@ const requiredFiles = [
 
 const requiredRefs = [
   "./images/cards/card-back.png",
+  "./images/cards/player-male-shiyeren.png",
+  "./images/cards/player-female-shiyeren.png",
   "./images/cards/sun-wukong.png",
   "./images/cards/zhu-bajie.png",
   "./images/cards/sha-wujing.png",
@@ -52,6 +56,10 @@ for (const ref of forbiddenRefs) {
 
 for (const expected of ["rotateY(180deg)", "transform-style", "object-fit: contain", "aspect-ratio: 480 / 1340"]) {
   if (!css.includes(expected)) throw new Error(`Missing card CSS behavior: ${expected}`);
+}
+
+for (const expected of ["玩家角色", "战斗内容卡牌", "公平对局", "胜者拾叶", "残卷副本"]) {
+  if (!html.includes(expected)) throw new Error(`Missing updated page content: ${expected}`);
 }
 
 for (const expected of ["click", "keydown", "aria-pressed", "is-flipped"]) {

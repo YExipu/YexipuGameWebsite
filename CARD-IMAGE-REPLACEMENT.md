@@ -15,6 +15,8 @@
 ## 固定文件名
 
 - `card-back.png`：所有角色共用的卡背
+- `player-male-shiyeren.png`：男性拾叶人
+- `player-female-shiyeren.png`：女性拾叶人
 - `sun-wukong.png`：孙悟空
 - `zhu-bajie.png`：猪八戒
 - `sha-wujing.png`：沙悟净
