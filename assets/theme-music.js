@@ -4,7 +4,7 @@
   const control = document.createElement("div");
   control.className = "music-control";
   control.innerHTML = `
-    <audio class="theme-audio" src="./audio/yexipu-theme.mp3" loop preload="metadata"></audio>
+    <audio class="theme-audio" src="./audio/yexipu-theme.mp3" autoplay loop preload="metadata"></audio>
     <button class="music-toggle" type="button" aria-label="播放主题曲" aria-pressed="false" aria-describedby="music-track-name">
       <span class="music-disc" aria-hidden="true"><i></i></span>
       <span class="music-copy">
@@ -22,6 +22,7 @@
   const stateText = control.querySelector(".music-copy b");
   let needsGesture = false;
   let hasError = false;
+  let gestureFallbackArmed = false;
 
   audio.volume = 0.45;
 
@@ -43,13 +44,37 @@
     button.disabled = hasError;
   };
 
+  const disarmGestureFallback = () => {
+    if (!gestureFallbackArmed) return;
+    document.removeEventListener("click", resumeFromGesture, true);
+    document.removeEventListener("keydown", resumeFromGesture, true);
+    gestureFallbackArmed = false;
+  };
+
+  const resumeFromGesture = async (event) => {
+    if (control.contains(event.target)) return;
+    if (!needsGesture || hasError || window.localStorage.getItem(STORAGE_KEY) === "off") return;
+
+    disarmGestureFallback();
+    await playMusic();
+  };
+
+  const armGestureFallback = () => {
+    if (gestureFallbackArmed) return;
+    document.addEventListener("click", resumeFromGesture, true);
+    document.addEventListener("keydown", resumeFromGesture, true);
+    gestureFallbackArmed = true;
+  };
+
   const playMusic = async () => {
     try {
       await audio.play();
       needsGesture = false;
+      disarmGestureFallback();
       window.localStorage.setItem(STORAGE_KEY, "on");
     } catch {
       needsGesture = true;
+      armGestureFallback();
     }
     updateState();
   };
@@ -60,6 +85,7 @@
     if (!audio.paused) {
       audio.pause();
       needsGesture = false;
+      disarmGestureFallback();
       window.localStorage.setItem(STORAGE_KEY, "off");
       updateState();
       return;
@@ -75,9 +101,9 @@
     updateState();
   });
 
-  if (window.localStorage.getItem(STORAGE_KEY) === "on") {
-    playMusic();
-  } else {
+  if (window.localStorage.getItem(STORAGE_KEY) === "off") {
     updateState();
+  } else {
+    playMusic();
   }
 })();

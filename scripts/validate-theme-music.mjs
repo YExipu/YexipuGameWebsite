@@ -22,10 +22,13 @@ for (const ref of ["./assets/theme-music.css", "./assets/theme-music.js"]) {
 
 for (const expected of [
   "./audio/yexipu-theme.mp3",
+  "autoplay",
   "localStorage",
   "audio.volume = 0.45",
   "loop",
-  "aria-pressed"
+  "aria-pressed",
+  'addEventListener("click", resumeFromGesture, true)',
+  'getItem(STORAGE_KEY) === "off"'
 ]) {
   if (!js.includes(expected)) throw new Error(`Missing music behavior: ${expected}`);
 }
