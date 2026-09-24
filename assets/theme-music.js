@@ -5,11 +5,11 @@
   control.className = "music-control";
   control.innerHTML = `
     <audio class="theme-audio" src="./audio/yexipu-theme.mp3" autoplay loop preload="metadata"></audio>
-    <button class="music-toggle" type="button" aria-label="播放主题曲" aria-pressed="false" aria-describedby="music-track-name">
+    <button class="music-toggle" type="button" aria-label="播放游戏原声" aria-pressed="false" aria-describedby="music-track-name">
       <span class="music-disc" aria-hidden="true"><i></i></span>
       <span class="music-copy">
         <small id="music-track-name">《闹天宫》·《叶戏谱》主题曲</small>
-        <b>播放主题曲</b>
+        <b>播放游戏原声</b>
       </span>
       <span class="music-bars" aria-hidden="true"><i></i><i></i><i></i></span>
     </button>
@@ -19,10 +19,17 @@
 
   const audio = control.querySelector(".theme-audio");
   const button = control.querySelector(".music-toggle");
+  const trackName = control.querySelector("#music-track-name");
   const stateText = control.querySelector(".music-copy b");
   let needsGesture = false;
   let hasError = false;
   let gestureFallbackArmed = false;
+  let currentTrack = {
+    id: "nao-tian-gong",
+    title: "闹天宫",
+    subtitle: "叶戏谱主题曲",
+    src: "./audio/yexipu-theme.mp3"
+  };
 
   audio.volume = 0.45;
 
@@ -32,16 +39,25 @@
     button.setAttribute("aria-pressed", isPlaying ? "true" : "false");
 
     const label = hasError
-      ? "主题曲暂不可用"
+      ? "游戏原声暂不可用"
       : needsGesture
         ? "点击继续播放"
         : isPlaying
-          ? "关闭主题曲"
-          : "播放主题曲";
+          ? "关闭游戏原声"
+          : "播放游戏原声";
 
     button.setAttribute("aria-label", label);
     stateText.textContent = label;
     button.disabled = hasError;
+
+    document.dispatchEvent(new CustomEvent("yexipu:music-state", {
+      detail: {
+        id: currentTrack.id,
+        title: currentTrack.title,
+        src: currentTrack.src,
+        isPlaying
+      }
+    }));
   };
 
   const disarmGestureFallback = () => {
@@ -52,7 +68,7 @@
   };
 
   const resumeFromGesture = async (event) => {
-    if (control.contains(event.target)) return;
+    if (control.contains(event.target) || event.target.closest?.("#soundtrack-list")) return;
     if (!needsGesture || hasError || window.localStorage.getItem(STORAGE_KEY) === "off") return;
 
     disarmGestureFallback();
@@ -79,6 +95,34 @@
     updateState();
   };
 
+  const playTrack = async (track) => {
+    if (!track?.id || !track?.title || !track?.src) return;
+
+    const isNewTrack = currentTrack.id !== track.id || audio.getAttribute("src") !== track.src;
+
+    if (!isNewTrack && !audio.paused) {
+      audio.pause();
+      needsGesture = false;
+      disarmGestureFallback();
+      window.localStorage.setItem(STORAGE_KEY, "off");
+      updateState();
+      return;
+    }
+
+    currentTrack = { ...track };
+    trackName.textContent = `《${track.title}》· ${track.subtitle ?? "叶戏谱游戏原声"}`;
+    hasError = false;
+    button.disabled = false;
+
+    if (isNewTrack) {
+      audio.pause();
+      audio.src = track.src;
+      audio.load();
+    }
+
+    await playMusic();
+  };
+
   button.addEventListener("click", async () => {
     if (hasError) return;
 
@@ -100,6 +144,16 @@
     hasError = true;
     updateState();
   });
+
+  window.YexipuMusic = {
+    playTrack,
+    getState: () => ({
+      id: currentTrack.id,
+      title: currentTrack.title,
+      src: currentTrack.src,
+      isPlaying: !audio.paused && !audio.ended
+    })
+  };
 
   if (window.localStorage.getItem(STORAGE_KEY) === "off") {
     updateState();

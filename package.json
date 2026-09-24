@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "node scripts/validate-static-site.mjs"
+    "build": "node scripts/validate-static-site.mjs && node scripts/validate-theme-music.mjs && node scripts/validate-soundtrack-library.mjs"
   },
   "devDependencies": {}
 }
