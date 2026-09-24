@@ -8,7 +8,7 @@
     <button class="music-toggle" type="button" aria-label="播放游戏原声" aria-pressed="false" aria-describedby="music-track-name">
       <span class="music-disc" aria-hidden="true"><i></i></span>
       <span class="music-copy">
-        <small id="music-track-name">《闹天宫》·《叶戏谱》主题曲</small>
+        <small id="music-track-name">《叶子戏》·《叶戏谱》游戏主题曲</small>
         <b>播放游戏原声</b>
       </span>
       <span class="music-bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -25,9 +25,9 @@
   let hasError = false;
   let gestureFallbackArmed = false;
   let currentTrack = {
-    id: "nao-tian-gong",
-    title: "闹天宫",
-    subtitle: "叶戏谱主题曲",
+    id: "ye-zi-xi",
+    title: "叶子戏",
+    subtitle: "游戏主题曲",
     src: "./audio/yexipu-theme.mp3"
   };
 

@@ -1,10 +1,34 @@
 [
   {
-    "id": "nao-tian-gong",
-    "title": "闹天宫",
-    "subtitle": "叶戏谱主题曲",
-    "scene": "西游残卷",
+    "id": "ye-zi-xi",
+    "title": "叶子戏",
+    "subtitle": "游戏主题曲",
+    "scene": "叶戏谱",
     "duration": "02:59",
     "src": "./audio/yexipu-theme.mp3"
+  },
+  {
+    "id": "hidden-intentions",
+    "title": "Hidden Intentions",
+    "subtitle": "游戏原声",
+    "scene": "叶戏谱",
+    "duration": "01:40",
+    "src": "./audio/hidden-intentions.mp3"
+  },
+  {
+    "id": "liang-xin",
+    "title": "两心",
+    "subtitle": "游戏原声",
+    "scene": "叶戏谱",
+    "duration": "03:02",
+    "src": "./audio/liang-xin.mp3"
+  },
+  {
+    "id": "huo-feng",
+    "title": "火风",
+    "subtitle": "游戏原声",
+    "scene": "叶戏谱",
+    "duration": "03:03",
+    "src": "./audio/huo-feng.mp3"
   }
 ]
